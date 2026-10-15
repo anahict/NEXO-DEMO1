@@ -183,7 +183,7 @@
                                 type="text"
                                 id="perfil-nombre"
                                 name="perfil-nombre"
-                                placeholder="Ej. Trendline"
+                                placeholder="Ej. Nova Rey"
                             >
 
                         </div>
@@ -566,7 +566,17 @@
 
 
 
-                    <!-- =========================
+                    <div id="seccion-press-kit" class="perfil-subseccion" hidden>
+<h3>Press Kit para artistas</h3>
+<div class="perfil-campo">
+<label for="perfil-press-kit">Press Kit PDF (opcional)</label>
+<input type="file" id="perfil-press-kit" name="perfil-press-kit" accept=".pdf,application/pdf" disabled>
+<small>Máximo 20 MB. Puedes continuar sin adjuntarlo.</small>
+<p id="estado-press-kit" role="status" aria-live="polite"></p>
+</div>
+<p>Por ahora puedes seleccionar y validar tu EPK, pero no se guarda ni se envía. En el futuro podrás consultarlo, actualizarlo o eliminarlo desde tu panel.</p>
+</div>
+<!-- =========================
                          VIDEO
                     ========================== -->
 
@@ -789,12 +799,13 @@
     </p>
 
     <h2>
-        Servicios y precios
+        Servicios y tarifas privadas
     </h2>
 
     <p class="perfil-paso-intro">
-        Ayuda a los clientes a entender qué pueden contratar
-        y cuál es el presupuesto aproximado para trabajar contigo.
+        Describe tu servicio. NEXO actúa como intermediario y gestiona las cotizaciones,
+        la disponibilidad y la coordinación de la contratación con el cliente.
+        Tus tarifas se destinan a la gestión interna de NEXO.
     </p>
 
 
@@ -824,7 +835,7 @@
         <div class="perfil-campo">
 
             <label for="servicio-precio">
-                Precio desde
+                Tarifa base privada
             </label>
 
             <input
@@ -836,7 +847,7 @@
             >
 
             <small>
-                Ingresa el precio aproximado en MXN.
+                Ingresa tu tarifa base en MXN para la gestión de cotizaciones de NEXO. No se muestra en el resumen público.
             </small>
 
         </div>
@@ -1126,47 +1137,7 @@
         </div>
 
 
-        <!-- NECESIDADES TÉCNICAS -->
-
-        <div class="perfil-campo perfil-campo-completo">
-
-            <label for="perfil-necesidades">
-                Requerimientos técnicos
-            </label>
-
-            <textarea
-                id="perfil-necesidades"
-                name="perfil-necesidades"
-                rows="5"
-                placeholder="Ej. Espacio mínimo, conexiones eléctricas, audio, iluminación, camerino, montaje..."
-            ></textarea>
-
-        </div>
-
-
-        <!-- RIDER -->
-
-        <div class="perfil-campo perfil-campo-completo">
-
-            <label for="perfil-rider">
-                Rider técnico
-            </label>
-
-            <input
-                type="file"
-                id="perfil-rider"
-                name="perfil-rider"
-                accept=".pdf"
-            >
-
-            <small>
-                Opcional. PDF de máximo 5 MB. En esta demostración el archivo no se envía a un servidor.
-            </small>
-
-        </div>
-
     </div>
-
 
     <!-- =========================
          DISPONIBILIDAD
@@ -1283,7 +1254,8 @@
 
     <p class="perfil-paso-intro">
         Confirma que la información esté correcta.
-        Después podrás enviarlo al equipo de NEXO para su revisión.
+        NEXO gestiona las propuestas y la intermediación con los clientes.
+        Este resumen excluye tus tarifas y datos técnicos internos.
     </p>
 
 
@@ -1318,13 +1290,6 @@
         </div>
 
         <div class="perfil-resumen-item">
-            <span>Precio desde</span>
-            <strong id="resumen-precio">
-                —
-            </strong>
-        </div>
-
-        <div class="perfil-resumen-item">
             <span>Experiencia</span>
             <strong id="resumen-experiencia">
                 —
@@ -1341,7 +1306,7 @@
         </h3>
 
         <p>
-            Tu perfil no aparecerá públicamente hasta que sea aprobado por el equipo de NEXO.
+            En la plataforma, NEXO revisará tu perfil antes de publicarlo. Esta demostración solo guarda una solicitud local; no envía información al equipo. Las tarifas y el EPK no se muestran públicamente. Esta demostración no ofrece confidencialidad real ni conserva archivos PDF. Para almacenar el EPK y permitir consultarlo, actualizarlo o eliminarlo de forma privada será necesario implementar un servidor con autenticación y control de acceso.
         </p>
 
         <label class="perfil-aceptacion">
@@ -1376,7 +1341,7 @@
             class="perfil-siguiente"
             id="publicar-perfil"
         >
-            Enviar perfil a revisión
+            Guardar solicitud de revisión (demo)
         </button>
 
     </div>
@@ -1398,7 +1363,7 @@
 
     <div class="nexo-footer-contenedor">
 
-        <div class="nexo-footer-grid">
+        <div class="nexo-footer-contenido">
 
             <!-- MARCA -->
             <div class="nexo-footer-marca">
