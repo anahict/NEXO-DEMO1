@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="../estilos.css">
 
     <style>
-        .registro-tipos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        @media (max-width: 850px) { .registro-tipos { grid-template-columns: 1fr; } }
         /* LOGOTIPO NEXO — BLANCO Y MORADO */
         .header .logo.nexo-logo {
             display: inline-flex;
@@ -29,6 +27,10 @@
         .header .logo.nexo-logo .logo-xo {
             color: #6C4CFF !important;
         }
+
+.registro-tipos {grid-template-columns:repeat(3,minmax(0,1fr));}
+#empresa-otro-contenedor[hidden] {display:none!important;}
+@media(max-width:850px){.registro-tipos{grid-template-columns:1fr;}}
     </style>
 </head>
 
@@ -124,36 +126,36 @@
                     </button>
 
 
-                    <!-- PROVEEDOR -->
+                    <!-- ARTISTA -->
 
                     <button
                         type="button"
                         class="registro-tipo"
-                        data-tipo="proveedor"
+                        data-tipo="artista"
                     >
 
                         <span class="registro-numero">02</span>
 
-                        <h2>Soy proveedor</h2>
+                        <h2>Soy artista</h2>
 
                         <p>
                             Quiero publicar mis servicios,
-                            recibir solicitudes y enviar propuestas.
+                            recibir solicitudes gestionadas por NEXO.
                         </p>
 
                         <span class="registro-link">
-                            Crear perfil de proveedor →
+                            Crear cuenta de artista →
                         </span>
 
                     </button>
 
-                    <!-- ARTISTA -->
-                    <button type="button" class="registro-tipo" data-tipo="artista">
+                    <button type="button" class="registro-tipo" data-tipo="proveedor">
                         <span class="registro-numero">03</span>
-                        <h2>Soy artista</h2>
-                        <p>Quiero mostrar mi talento, crear mi perfil profesional y recibir solicitudes para eventos.</p>
-                        <span class="registro-link">Crear perfil de artista →</span>
+                        <h2>Soy proveedor</h2>
+                        <p>Ofrezco equipo, producción o servicios profesionales para eventos.</p>
+                        <span class="registro-link">Crear cuenta de proveedor →</span>
                     </button>
+
                 </div>
 
 
@@ -247,7 +249,7 @@
 
 
                     <button type="button" class="registro-enviar" id="crear-cliente">
-                        Continuar
+                        Crear cuenta
                     </button>
 
                 </div>
@@ -258,7 +260,7 @@
                 ======================================= -->
 
                 <div
-                    id="formulario-proveedor"
+                    id="formulario-artista"
                     class="registro-formulario"
                 >
 
@@ -266,18 +268,20 @@
                         ← Volver
                     </button>
 
-                    <p class="seccion-etiqueta" id="registro-titulo-profesional">CUENTA DE PROVEEDOR</p>
+                    <p class="seccion-etiqueta">
+                        CUENTA DE ARTISTA
+                    </p>
 
-                    <h2>Empieza a publicar tus servicios</h2>
+                    <h2>Empieza a publicar tu talento</h2>
 
                     <p class="registro-formulario-intro">
-                        Primero define qué tipo de servicio ofreces
+                        Primero define qué tipo de talento ofreces
                         y después completa tus datos de contacto.
                     </p>
 
 
                     <!-- ======================================
-                         CATEGORÍA DEL PROVEEDOR
+                         CATEGORÍA DEL ARTISTA
                     ======================================= -->
 
                     <div class="registro-seccion-proveedor">
@@ -286,7 +290,7 @@
                             PERFIL PROFESIONAL
                         </p>
 
-                        <h3>¿Qué tipo de servicio ofreces?</h3>
+                        <h3>¿Qué tipo de artista eres?</h3>
 
                         <p class="registro-formulario-intro">
                             Selecciona la categoría que mejor
@@ -349,11 +353,6 @@
                             <label class="registro-opcion-proveedor">
                                 <input type="radio" name="tipo-proveedor" value="show-especial">
                                 <span>Show especial</span>
-                            </label>
-
-                            <label class="registro-opcion-proveedor">
-                                <input type="radio" name="tipo-proveedor" value="produccion">
-                                <span>Producción / equipamiento</span>
                             </label>
 
                         </div>
@@ -576,30 +575,6 @@
 
 
                     <!-- ======================================
-                         PRODUCCIÓN
-                    ======================================= -->
-
-                    <div id="opciones-produccion" class="registro-subopciones">
-
-                        <p class="seccion-etiqueta">PRODUCCIÓN</p>
-
-                        <h3>¿Qué servicios ofreces?</h3>
-
-                        <div class="registro-tags-seleccion">
-
-                            <label><input type="checkbox" name="servicio-produccion" value="audio"><span>Audio</span></label>
-                            <label><input type="checkbox" name="servicio-produccion" value="iluminacion"><span>Iluminación</span></label>
-                            <label><input type="checkbox" name="servicio-produccion" value="pantallas-led"><span>Pantallas LED</span></label>
-                            <label><input type="checkbox" name="servicio-produccion" value="backline"><span>Backline</span></label>
-                            <label><input type="checkbox" name="servicio-produccion" value="escenarios"><span>Escenarios</span></label>
-                            <label><input type="checkbox" name="servicio-produccion" value="produccion-integral"><span>Producción integral</span></label>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- ======================================
                          DATOS DEL PROVEEDOR
                     ======================================= -->
 
@@ -614,7 +589,7 @@
                             <input
                                 type="text"
                                 id="proveedor-nombre"
-                                placeholder="Ej. Trendline"
+                                placeholder="Ej. Nova Rey"
                             >
 
                         </div>
@@ -682,101 +657,44 @@
                     </div>
 
 
-                    <button type="button" class="registro-enviar" id="crear-proveedor">
+                    <button type="button" class="registro-enviar" id="crear-artista">
                         Continuar con mi perfil
                     </button>
 
                 </div>
 
+<div id="formulario-empresa" class="registro-formulario">
+<button type="button" class="registro-volver">← Volver</button>
+<p class="seccion-etiqueta">CUENTA DE PROVEEDOR</p><h2>Publica tus servicios profesionales</h2>
+<p class="registro-formulario-intro">Selecciona tu categoría principal. NEXO gestionará las solicitudes de cotización y el contacto con los clientes.</p>
+<div class="registro-seccion-proveedor"><h3>¿Qué servicio ofreces?</h3><div class="registro-opciones-proveedor"><label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="0"><span>Audio profesional</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="1"><span>Iluminación</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="2"><span>Pantallas y video</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="3"><span>Escenarios y estructuras</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="4"><span>Backline</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="5"><span>Producción de eventos</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="6"><span>Mantenimiento y reparación</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="7"><span>Mudanzas y transporte</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="8"><span>Instalación y montaje</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="9"><span>Fotografía y video</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="10"><span>Catering y alimentos</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="11"><span>Mobiliario y decoración</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="12"><span>Seguridad</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="13"><span>Tecnología</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="14"><span>Servicios para empresas</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="15"><span>Plantas de luz y generación eléctrica</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="16"><span>Pistas de baile</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="17"><span>Baños móviles</span></label>
+<label class="registro-opcion-proveedor"><input type="radio" name="categoria-servicio" value="18"><span>Otros servicios</span></label></div>
+<div class="registro-campo" id="empresa-otro-contenedor" hidden><label for="empresa-otro">Especifica tu servicio</label><input type="text" id="empresa-otro" placeholder="Describe tu servicio"></div></div>
+<div class="registro-campos"><div class="registro-campo"><label for="empresa-nombre">Nombre comercial</label><input id="empresa-nombre" type="text" placeholder="Ej. Producciones Aurora"></div><div class="registro-campo"><label for="empresa-contacto">Nombre de contacto</label><input id="empresa-contacto" type="text" placeholder="Nombre completo"></div><div class="registro-campo"><label for="empresa-correo">Correo electrónico</label><input id="empresa-correo" type="email" placeholder="correo@ejemplo.com"></div><div class="registro-campo"><label for="empresa-telefono">Teléfono</label><input id="empresa-telefono" type="tel" placeholder="55 0000 0000"></div><div class="registro-campo"><label for="empresa-password">Contraseña</label><input id="empresa-password" type="password" placeholder="Mínimo 6 caracteres"></div></div>
+<button type="button" class="registro-enviar" id="crear-empresa">Continuar con mi perfil</button></div>
             </div>
 
         </section>
 
     </main>
 
-
-<footer class="nexo-footer">
-
-    <div class="nexo-footer-contenedor">
-
-        <div class="nexo-footer-grid">
-
-            <!-- MARCA -->
-            <div class="nexo-footer-marca">
-
-                <a href="../index.html" class="nexo-footer-logo">
-                    NE<span>XO</span>
-                </a>
-
-                <p>
-                    Conectamos talento, entretenimiento y
-                    producción profesional para hacer
-                    realidad experiencias extraordinarias.
-                </p>
-
-                <div class="nexo-footer-redes">
-                    <a href="#" aria-label="Instagram">Instagram ↗</a>
-                    <a href="#" aria-label="Facebook">Facebook ↗</a>
-                </div>
-
-            </div>
-
-            <!-- EXPLORAR -->
-            <div class="nexo-footer-columna">
-
-                <h3>Explorar</h3>
-
-                <a href="artistas.html">Artistas y música</a>
-                <a href="explorar.html?categoria=entretenimiento">Entretenimiento</a>
-                <a href="produccion.html">Producción y servicios</a>
-                <a href="eventos.html">Tipos de evento</a>
-
-            </div>
-
-            <!-- NEXO -->
-            <div class="nexo-footer-columna">
-
-                <h3>NEXO</h3>
-
-                <a href="como-funciona.html">Cómo funciona</a>
-                <a href="proveedores.html">Publica tus servicios</a>
-                <a href="ayuda.html">Centro de ayuda</a>
-                <a href="contacto.html">Contacto</a>
-
-            </div>
-
-            <!-- CONTRATACIÓN -->
-            <div class="nexo-footer-columna">
-
-                <h3>Tu próximo evento</h3>
-
-                <p>
-                    Encuentra artistas y servicios
-                    para crear un evento inolvidable.
-                </p>
-
-                <a href="cotizar.html" class="nexo-footer-boton">
-                    Cotiza tu evento ↗
-                </a>
-
-            </div>
-
-        </div>
-
-        <div class="nexo-footer-inferior">
-
-            <p>© 2026 NEXO. Todos los derechos reservados.</p>
-
-            <div>
-                <a href="privacidad.html">Aviso de privacidad</a>
-                <a href="terminos.html">Términos y condiciones</a>
-            </div>
-
-        </div>
-
-    </div>
-
-</footer>
 
     <!-- ======================================
          JAVASCRIPT
