@@ -1,5 +1,51 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+
+    // El registro usa nexoProveedor para artistas y proveedores.
+    var registroInicial = {};
+    try { registroInicial = JSON.parse(localStorage.getItem('nexoProveedor') || '{}') || {}; }
+    catch (error) { registroInicial = {}; }
+    var tipoCuentaPerfil = registroInicial.tipoCuenta || 'proveedor';
+    var esArtista = tipoCuentaPerfil === 'artista';
+    // El EPK es exclusivo de artistas; no existe rider tecnico en este formulario.
+    var seccionEPK = document.getElementById('seccion-press-kit');
+    var inputEPK = document.getElementById('perfil-press-kit');
+    if (seccionEPK) seccionEPK.hidden = !esArtista;
+    if (inputEPK) {
+        inputEPK.disabled = !esArtista;
+        if (!esArtista) inputEPK.value = '';
+    }
+    if (tipoCuentaPerfil === 'cliente') {
+        document.querySelector('.perfil-paso-intro').textContent = 'Este formulario es para artistas y proveedores. Regresa al registro para elegir una cuenta profesional.';
+        document.getElementById('continuar-perfil-paso-1').disabled = true;
+    }
+    // No se codifican PDF en localStorage: solo se conserva su ficha descriptiva.
+    function validarPDF(id, maxMB) {
+        var input = document.getElementById(id);
+        if (!input || input.disabled || !input.files.length) return true;
+        var archivo = input.files[0];
+        return exigir(/\.pdf$/i.test(archivo.name) &&
+            (!archivo.type || archivo.type === 'application/pdf') &&
+            archivo.size > 0 && archivo.size <= maxMB * 1024 * 1024,
+            'Selecciona un PDF no vacío de máximo ' + maxMB + ' MB.', id);
+    }
+    function fichaPDF(id) {
+        var input = document.getElementById(id);
+        var archivo = input && !input.disabled && input.files && input.files[0];
+        return archivo ? {nombre: archivo.name, bytes: archivo.size, archivoConservado: false, enviado: false} : null;
+    }
+    if (inputEPK) {
+        inputEPK.addEventListener('change', function () {
+            var correcto = validarPDF('perfil-press-kit', 20);
+            var estado = document.getElementById('estado-press-kit');
+            if (estado) {
+                estado.textContent = correcto
+                    ? (this.files.length ? this.files[0].name + ' — seleccionado; no enviado ni guardado.' : 'Sin archivo (opcional).')
+                    : 'Archivo no valido. Sustituyelo o quitalo para continuar.';
+            }
+        });
+    }
+
     /* =========================================================
        NEXO - COMPLETAR PERFIL
     ========================================================= */
@@ -30,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var perfilNombresPasos = [
         "Información general",
         "Fotos y multimedia",
-        "Servicios y precios",
+        "Servicios y tarifas privadas",
         "Información profesional",
         "Vista previa y revisión"
     ];
@@ -139,6 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (cobertura.value === 'otro' && !exigir(!!valor('otra-cobertura'), 'Escribe tu zona de cobertura.', 'otra-cobertura')) return false;
         }
         if (indice === 1) {
+            if (!validarPDF("perfil-press-kit", 20)) return false;
             const portada = document.getElementById('perfil-portada');
             const avatar = document.getElementById('perfil-avatar');
             if (!exigir(!!(portada && portada.files.length || localStorage.getItem('nexoPortadaTemporal')), 'Selecciona una foto de portada.', 'perfil-portada')) return false;
@@ -162,8 +209,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!exigir(valor('perfil-experiencia') !== '' && Number(valor('perfil-experiencia')) >= 0, 'Indica tus años de experiencia.', 'perfil-experiencia')) return false;
             if (!exigir(valor('perfil-equipo-personas') !== '' && Number(valor('perfil-equipo-personas')) >= 1, 'Indica cuántas personas integran tu equipo (mínimo 1).', 'perfil-equipo-personas')) return false;
             if (!exigir(!!document.querySelector('input[name="disponibilidad"]:checked'), 'Selecciona al menos una opción de disponibilidad.')) return false;
-            const rider = document.getElementById('perfil-rider');
-            if (rider && rider.files.length && !exigir(rider.files[0].type === 'application/pdf' && rider.files[0].size <= 5 * 1024 * 1024, 'El rider debe ser PDF de máximo 5 MB.', 'perfil-rider')) return false;
         }
         return true;
     }
@@ -1273,11 +1318,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         "perfil-clientes"
                     );
 
-                var necesidades =
-                    document.getElementById(
-                        "perfil-necesidades"
-                    );
-
                 var video =
                     document.getElementById(
                         "perfil-video"
@@ -1512,13 +1552,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                 .trim()
                             : "",
 
-                    requerimientos:
-                        necesidades
-                            ? necesidades
-                                .value
-                                .trim()
-                            : "",
-
                     disponibilidad:
                         disponibilidad,
 
@@ -1587,10 +1620,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 };
 
 
+                perfilPublicado.galeria = galeriaGuardada;
+                perfilPublicado.tipoCuenta = tipoCuentaPerfil;
+                var datosInternos = {
+                    tarifaBase: perfilPublicado.servicio.precio,
+                    modalidadTarifa: perfilPublicado.servicio.modalidad
+                };
+                delete perfilPublicado.servicio.precio;
+                delete perfilPublicado.servicio.modalidad;
+                perfilPublicado.pressKit = esArtista ? fichaPDF('perfil-press-kit') : null;
+                // Separación de datos para la demo; NO es un mecanismo de seguridad.
                 try {
 
                    var solicitudRevision = {
     ...perfilPublicado,
+    datosInternos: datosInternos,
+    demostracionLocal: true,
     estado: "pendiente_revision",
     fechaEnvio: new Date().toISOString(),
     plazoRevisionHoras: null
