@@ -7168,3 +7168,91 @@ html {
         gap: 15px;
     }
 }
+
+/* NEXO - 4 ARTISTAS POR FILA */
+
+@media (min-width: 1200px) {
+    .artistas-layout {
+        grid-template-columns: 240px minmax(0, 1fr);
+    }
+
+    .artistas-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 20px;
+    }
+}
+
+/* NEXO - TARJETAS COMPACTAS */
+
+@media (min-width: 1100px) {
+    .artistas-lista {
+        min-width: 0;
+    }
+
+    .artistas-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 18px !important;
+    }
+
+    .artistas-grid .artista-card {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: none !important;
+    }
+}
+
+.artistas-grid .artista-imagen {
+    height: 190px !important;
+    overflow: hidden;
+}
+
+.artistas-grid .artista-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artistas-grid .artista-info {
+    padding: 18px !important;
+}
+
+.artistas-grid .artista-info h3 {
+    font-size: 21px !important;
+    margin: 8px 0 !important;
+}
+
+.artistas-grid .artista-info p {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+
+    margin-bottom: 12px !important;
+}
+
+.artistas-grid .artista-rating {
+    margin: 10px 0 !important;
+}
+
+/* BOTÓN VER MÁS */
+
+.nexo-ver-mas {
+    display: block;
+    margin: 30px auto 0;
+    padding: 14px 32px;
+    background: #6C4CFF;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.nexo-ver-mas:hover {
+    background: #8F79FF;
+}
