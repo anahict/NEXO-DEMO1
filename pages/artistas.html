@@ -36,6 +36,38 @@
             </a>
 
         </div>
+		
+		<style>
+#sin-resultados {
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 20px;
+    padding: 45px 30px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+#sin-resultados[hidden] {
+    display: none !important;
+}
+
+#sin-resultados h3 {
+    color: #171717;
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+#sin-resultados p {
+    color: #777777;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Fotografías provisionales de comedia; sustituir con imágenes autorizadas */
+.nexo-comedia-placeholder { background:var(--color-artista,#7048c6); display:flex; align-items:center; justify-content:center; min-height:220px; }
+.nexo-comedia-inicial { color:white; font-size:clamp(42px,5vw,76px); font-weight:800; letter-spacing:.04em; }
+.nexo-perfil-pendiente { display:inline-block; margin-top:12px; font-size:13px; color:#777; font-weight:600; }
+</style>
 
     </header>
 
@@ -54,7 +86,7 @@
                 </h1>
 
                 <p>
-                    Explora bandas, DJs, cantantes, solistas e instrumentistas
+                    Explora bandas, DJs, cantantes, comediantes e músicos
                     disponibles para distintos tipos de eventos.
                 </p>
 
@@ -72,7 +104,7 @@
 
                 <input
                     type="text"
-                    placeholder="Busca banda, DJ, cantante..."
+                    placeholder="Busca banda, DJ, comediante..."
                 >
 
                 <button type="button">
@@ -92,88 +124,80 @@
 
         <div class="artistas-layout">
 
-            <aside class="artistas-filtros">
+         <!-- FILTROS NEXO -->
+<aside class="artistas-filtros">
 
-                <h2>Filtros</h2>
+    <h2>Filtros</h2>
 
-                <div class="filtro-grupo">
+    <!-- TIPO DE TALENTO -->
+    <div class="filtro-grupo">
+        <h3>Tipo de talento</h3>
 
-                  <h3>Categoría</h3>
+        <select id="filtro-talento">
+            <option value="">Todas las categorías</option>
+            <option value="cantantes">Cantantes y solistas</option>
+            <option value="bandas">Bandas y grupos musicales</option>
+            <option value="tradicional">Música tradicional y ensambles</option>
+            <option value="musicos">Músicos e instrumental</option>
+            <option value="dj">DJ y experiencias musicales</option>
+            <option value="comedia">Comedia y humor</option>
+            <option value="magia">Magia y espectáculos</option>
+            <option value="danza">Danza y performance</option>
+            <option value="conferencistas">Conferencistas</option>
+            <option value="conductores">Conductores y presentadores</option>
+            <option value="infantil">Entretenimiento infantil</option>
+            <option value="actores">Actores y talento escénico</option>
+        </select>
+    </div>
 
-                    <label>
-                        <input type="checkbox">
-                      Bandas
-                  </label>
+    <!-- ESPECIALIDAD -->
+    <div class="filtro-grupo">
+        <h3>Especialidad</h3>
 
-                    <label>
-                        <input type="checkbox">
-                        DJs
-                  </label>
+        <select id="filtro-especialidad" disabled>
+            <option value="">Todas las especialidades</option>
+        </select>
+    </div>
 
-                    <label>
-                        <input type="checkbox">
-                        Cantantes
-                    </label>
+    <!-- GÉNERO MUSICAL -->
+    <div class="filtro-grupo" id="grupo-genero" hidden>
+        <h3>Género musical</h3>
 
-                    <label>
-                        <input type="checkbox">
-                        Solistas
-                    </label>
+        <select id="filtro-genero">
+            <option value="">Todos los géneros</option>
+            <option value="pop">Pop</option>
+            <option value="rock">Rock</option>
+            <option value="regional">Regional mexicano</option>
+            <option value="salsa">Salsa</option>
+            <option value="cumbia">Cumbia</option>
+            <option value="jazz">Jazz</option>
+            <option value="balada">Balada</option>
+            <option value="electronica">Electrónica</option>
+            <option value="reggaeton">Reggaetón</option>
+            <option value="versatil">Versátil</option>
+        </select>
+    </div>
 
-                    <label>
-                        <input type="checkbox">
-                        Instrumentistas
-                    </label>
+    <!-- TIPO DE EVENTO -->
+    <div class="filtro-grupo">
+        <h3>Tipo de evento</h3>
 
-                    <label>
-                        <input type="checkbox">
-                        Tributos
-                    </label>
+        <select id="filtro-evento">
+            <option value="">Todos los eventos</option>
+            <option value="corporativo">Corporativo</option>
+            <option value="boda">Boda</option>
+            <option value="fiesta">Fiesta privada</option>
+            <option value="concierto">Concierto</option>
+            <option value="festival">Festival</option>
+        </select>
+    </div>
 
-                </div>
+    <!-- LIMPIAR FILTROS -->
+    <button type="button" id="limpiar-filtros">
+        ↺ Limpiar filtros
+    </button>
 
-
-                <div class="filtro-grupo">
-
-                    <h3>Ubicación</h3>
-
-                    <select>
-                        <option>Ciudad de México</option>
-                        <option>Estado de México</option>
-                        <option>Querétaro</option>
-                        <option>Puebla</option>
-                    </select>
-
-                </div>
-
-
-                <div class="filtro-grupo">
-
-                    <h3>Tipo de evento</h3>
-
-                    <label>
-                        <input type="checkbox">
-                        Corporativo
-                    </label>
-
-                    <label>
-                        <input type="checkbox">
-                        Boda
-                    </label>
-
-                    <label>
-                        <input type="checkbox">
-                        Fiesta
-                    </label>
-
-                    <label>
-                        <input type="checkbox">
-                        Concierto
-                    </label>
-
-                </div>
-
-            </aside>
+</aside>
 
 
             <div class="artistas-lista">
@@ -190,12 +214,25 @@
                         </h2>
                     </div>
     </div>
+				
+				<!-- MENSAJE SIN RESULTADOS -->
+<div id="sin-resultados" hidden>
+    <h3>No encontramos artistas con estos filtros.</h3>
+    <p>
+        Prueba con otra categoría o limpia los filtros
+        para explorar más talento.
+    </p>
+</div>
 			
 			<div class="artistas-grid">
 				
 				<!--TRENDLINE -->
 
-    <article class="artista-card">
+    <article class="artista-card"
+         data-categoria="bandas"
+         data-especialidad="Grupos de covers"
+         data-generos="pop,rock,versatil"
+         data-eventos="corporativo,boda,fiesta,concierto">
 
         <div class="artista-imagen">
 
@@ -234,8 +271,11 @@
 	
 				<!--MR. LOXLEY -->
 
-    <article class="artista-card">
-
+   <article class="artista-card"
+         data-categoria="dj"
+         data-especialidad="DJ con performance"
+         data-generos="pop,rock,versatil"
+         data-eventos="corporativo,boda,fiesta">
         <div class="artista-imagen">
 
             <img src="../assets/images/mr-loxley.jpg" alt="Mr. Loxley">
@@ -274,7 +314,11 @@
 
 				<!--TWO SOULS -->
 				
-    <article class="artista-card">
+   <article class="artista-card"
+         data-categoria="cantantes"
+         data-especialidad="Dúos vocales"
+         data-generos="pop,balada"
+         data-eventos="corporativo,boda,fiesta">
 
         <div class="artista-imagen">
 
@@ -311,7 +355,171 @@
 
     </article>
 
+
+    <!-- COMEDIA: Mau Jalife | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Stand-up comedy" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#7048c6">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">MJ</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">STAND-UP · PERFIL EN PREPARACIÓN</span>
+        <h3>Mau Jalife</h3>
+        <p>Comediante y guionista; humor de observación y experiencia en televisión.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
+
+    <!-- COMEDIA: Slobotzky | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Stand-up comedy" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#2176bd">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">S</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">STAND-UP · PERFIL EN PREPARACIÓN</span>
+        <h3>Slobotzky</h3>
+        <p>Stand-up y humor irreverente; coconductor de La Cotorrisa.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
+
+    <!-- COMEDIA: Jurgan Jacobo | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Stand-up comedy" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#e26d43">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">JJ</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">STAND-UP · PERFIL EN PREPARACIÓN</span>
+        <h3>Jurgan Jacobo</h3>
+        <p>Comediante y escritor; integrante fundador de Standopados.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
+
+    <!-- COMEDIA: Alan Saldaña | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Stand-up comedy" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#ba477c">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">AS</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">STAND-UP · PERFIL EN PREPARACIÓN</span>
+        <h3>Alan Saldaña</h3>
+        <p>El As de la Comedia; monólogos y anécdotas cotidianas.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
+
+    <!-- COMEDIA: Manolo Carmona | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Stand-up comedy" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#327f75">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">MC</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">STAND-UP · PERFIL EN PREPARACIÓN</span>
+        <h3>Manolo Carmona</h3>
+        <p>Comedia y conducción; información profesional por confirmar.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
+
+    <!-- COMEDIA: Alex Saldaña | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Stand-up comedy" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#a66c26">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">AS</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">STAND-UP · PERFIL EN PREPARACIÓN</span>
+        <h3>Alex Saldaña</h3>
+        <p>Monólogos e imitaciones; información profesional por confirmar.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
+
+    <!-- COMEDIA: Standopados Original | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Shows de humor" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#7048c6">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">SO</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">SHOW DE COMEDIA · PERFIL EN PREPARACIÓN</span>
+        <h3>Standopados Original</h3>
+        <p>Espectáculo colectivo de stand-up; alineación actual por confirmar.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
+
+    <!-- COMEDIA: Luiki Wiki | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Stand-up comedy" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#2176bd">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">LW</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">STAND-UP · PERFIL EN PREPARACIÓN</span>
+        <h3>Luiki Wiki</h3>
+        <p>Stand-up y comedia para eventos corporativos.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
+
+    <!-- COMEDIA: Rogelio Ramos | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Stand-up comedy" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#e26d43">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">RR</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">STAND-UP · PERFIL EN PREPARACIÓN</span>
+        <h3>Rogelio Ramos</h3>
+        <p>El Máster de la Comedia; humor sobre experiencias cotidianas.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
+
+    <!-- COMEDIA: Jesús Guzmán | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Stand-up comedy" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#ba477c">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">JG</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">STAND-UP · PERFIL EN PREPARACIÓN</span>
+        <h3>Jesús Guzmán</h3>
+        <p>Comedia familiar y para eventos; identidad por confirmar.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
+
+    <!-- COMEDIA: Daniel Sosa | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Stand-up comedy" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#327f75">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">DS</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">STAND-UP · PERFIL EN PREPARACIÓN</span>
+        <h3>Daniel Sosa</h3>
+        <p>Comediante de stand-up, conocido por Sosafado y Maleducado.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
+
+    <!-- COMEDIA: Eduardo Talavera | BORRADOR -->
+    <article class="artista-card" data-categoria="comedia" data-especialidad="Stand-up comedy" data-eventos="" data-estado="borrador">
+      <div class="artista-imagen nexo-comedia-placeholder" style="--color-artista:#a66c26">
+        <div class="nexo-comedia-inicial" aria-label="Fotografía pendiente de autorización">ET</div>
+      </div>
+      <div class="artista-info">
+        <span class="artista-categoria">STAND-UP · PERFIL EN PREPARACIÓN</span>
+        <h3>Eduardo Talavera</h3>
+        <p>Stand-up y comedia de observación; especial Frágil.</p>
+        <span class="nexo-perfil-pendiente">Ficha próximamente</span>
+      </div>
+    </article>
 </div>
+				
+				<button
+    type="button"
+    id="ver-mas-artistas"
+    class="nexo-ver-mas"
+    hidden>
+    Ver más artistas ↓
+</button>
 
 </section>
 
@@ -325,7 +533,7 @@
 
     <div class="nexo-footer-contenedor">
 
-        <div class="nexo-footer-grid">
+      <div class="nexo-footer-contenido">
 
             <!-- MARCA -->
             <div class="nexo-footer-marca">
@@ -404,7 +612,268 @@
 
 </footer>
 	
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+    const filtroTalento = document.getElementById("filtro-talento");
+    const filtroEspecialidad = document.getElementById("filtro-especialidad");
+    const filtroGenero = document.getElementById("filtro-genero");
+    const grupoGenero = document.getElementById("grupo-genero");
+    const filtroEvento = document.getElementById("filtro-evento");
+    const limpiarFiltros = document.getElementById("limpiar-filtros");
+
+    const especialidades = {
+        cantantes: [
+            "Solista femenino",
+            "Solista masculino",
+            "Dúos vocales",
+            "Cantantes con banda",
+            "Cantantes de música versátil"
+        ],
+        bandas: [
+            "Grupos de covers",
+            "Grupos versátiles",
+            "Bandas de rock",
+            "Grupos pop",
+            "Bandas de música original",
+            "Grupos de música regional"
+        ],
+        tradicional: [
+            "Mariachis",
+            "Tríos románticos",
+            "Norteños",
+            "Bandas sinaloenses",
+            "Rondallas",
+            "Orquestas",
+            "Big Bands",
+            "Cuartetos y ensambles"
+        ],
+        musicos: [
+            "Pianistas y tecladistas",
+            "Violinistas",
+            "Saxofonistas",
+            "Guitarristas",
+            "Bajistas",
+            "Bateristas y percusionistas",
+            "Trompetistas",
+            "Flautistas",
+            "Violonchelistas",
+            "Arpistas",
+            "Música clásica e instrumental"
+        ],
+        dj: [
+            "DJ para bodas",
+            "DJ para eventos corporativos",
+            "DJ para fiestas privadas",
+            "DJ con performance",
+            "Música electrónica",
+            "Música versátil"
+        ],
+        comedia: [
+            "Stand-up comedy",
+            "Comediantes",
+            "Improvisación",
+            "Comedia musical",
+            "Shows de humor"
+        ],
+        magia: [
+            "Magos",
+            "Ilusionistas",
+            "Mentalistas",
+            "Hipnotistas",
+            "Imitadores",
+            "Shows temáticos"
+        ],
+        danza: [
+            "Bailarines profesionales",
+            "Compañías de danza",
+            "Shows coreográficos",
+            "Performance artístico",
+            "Espectáculos circenses"
+        ],
+        conferencistas: [
+            "Motivacionales",
+            "Empresariales",
+            "Liderazgo",
+            "Desarrollo personal",
+            "Tecnología e innovación",
+            "Bienestar"
+        ],
+        conductores: [
+            "Maestros de ceremonias",
+            "Conductoras",
+            "Conductores",
+            "Presentadores corporativos",
+            "Animadores de eventos"
+        ],
+        infantil: [
+            "Shows infantiles",
+            "Payasos",
+            "Magos infantiles",
+            "Personajes temáticos",
+            "Cuentacuentos",
+            "Animadores infantiles"
+        ],
+        actores: [
+            "Actrices",
+            "Actores",
+            "Talento para eventos",
+            "Personajes caracterizados",
+            "Teatro en vivo"
+        ]
+    };
+
+    const categoriasMusicales = [
+        "cantantes",
+        "bandas",
+        "tradicional",
+        "musicos",
+        "dj"
+    ];
+
+    function actualizarEspecialidades() {
+        const categoria = filtroTalento.value;
+
+        filtroEspecialidad.innerHTML =
+            '<option value="">Todas las especialidades</option>';
+
+        const opciones = especialidades[categoria] || [];
+
+        opciones.forEach(function (especialidad) {
+            const opcion = document.createElement("option");
+            opcion.value = especialidad;
+            opcion.textContent = especialidad;
+            filtroEspecialidad.appendChild(opcion);
+        });
+
+        filtroEspecialidad.disabled = opciones.length === 0;
+
+        const esMusical = categoriasMusicales.includes(categoria);
+
+        grupoGenero.hidden = !esMusical;
+        filtroGenero.value = "";
+    }
+
+    filtroTalento.addEventListener("change", actualizarEspecialidades);
+	
+
+    limpiarFiltros.addEventListener("click", function () {
+        filtroTalento.value = "";
+        filtroEvento.value = "";
+        actualizarEspecialidades();
+		
+		});
+		
+		// ========================================
+// FILTRADO DE ARTISTAS NEXO
+// ========================================
+
+const tarjetasArtistas = document.querySelectorAll(".artista-card");
+const contadorArtistas = document.querySelector(".resultado-cantidad");
+	let limiteArtistas = 6;
+
+const botonVerMas = document.getElementById("ver-mas-artistas");
+
+botonVerMas.addEventListener("click", function () {
+    limiteArtistas += 6;
+    filtrarArtistas();
+});
+
+function filtrarArtistas() {
+
+    const categoria = filtroTalento.value;
+    const especialidad = filtroEspecialidad.value;
+    const genero = filtroGenero.value;
+    const evento = filtroEvento.value;
+
+    let artistasVisibles = 0;
+
+    tarjetasArtistas.forEach(function (tarjeta) {
+
+        const categoriaArtista = tarjeta.dataset.categoria || "";
+        const especialidadArtista = tarjeta.dataset.especialidad || "";
+
+        const generosArtista = (tarjeta.dataset.generos || "")
+            .split(",")
+            .map(valor => valor.trim());
+
+        const eventosArtista = (tarjeta.dataset.eventos || "")
+            .split(",")
+            .map(valor => valor.trim());
+
+        const coincideCategoria =
+            !categoria || categoriaArtista === categoria;
+
+        const coincideEspecialidad =
+            !especialidad || especialidadArtista === especialidad;
+
+        const coincideGenero =
+            !genero || generosArtista.includes(genero);
+
+        const coincideEvento =
+            !evento || eventosArtista.includes(evento);
+
+        const mostrar =
+            coincideCategoria &&
+            coincideEspecialidad &&
+            coincideGenero &&
+            coincideEvento;
+
+       tarjeta.style.display =
+    mostrar && artistasVisibles < limiteArtistas ? "" : "none";
+        if (mostrar) {
+            artistasVisibles++;
+        }
+
+    });
+	
+	// MOSTRAR MENSAJE CUANDO NO HAY ARTISTAS
+const mensajeSinResultados = document.getElementById("sin-resultados");
+
+if (mensajeSinResultados) {
+    mensajeSinResultados.hidden = artistasVisibles !== 0;
+}
+
+    if (contadorArtistas) {
+        contadorArtistas.textContent =
+            artistasVisibles +
+            (artistasVisibles === 1 ? " artista" : " artistas");
+    }
+
+}
+
+// ACTIVAR FILTROS
+
+filtroTalento.addEventListener("change", function () {
+    limiteArtistas = 6;
+    filtrarArtistas();
+});
+
+filtroEspecialidad.addEventListener("change", filtrarArtistas);
+
+filtroGenero.addEventListener("change", filtrarArtistas);
+
+filtroEvento.addEventListener("change", filtrarArtistas);
+
+// ACTUALIZAR AL CAMBIAR CATEGORÍA
+
+filtroTalento.addEventListener("change", function () {
+    filtrarArtistas();
+});
+
+// LIMPIAR RESULTADOS
+
+limpiarFiltros.addEventListener("click", function () {
+    filtrarArtistas();
+});
+
+// MOSTRAR RESULTADOS INICIALES
+
+actualizarEspecialidades();
+filtrarArtistas();
+
+});
+</script>
 </body>
 
 </html>
