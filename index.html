@@ -358,6 +358,107 @@
     }
 }
 </style>
+	
+	<style>
+/* =====================================
+   NEXO — BUSCADOR POR CATEGORÍAS
+===================================== */
+
+.campo-busqueda {
+    position: relative;
+}
+
+.nexo-filtros-buscador {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 100%;
+    min-width: min(350px, 90vw);
+    max-height: min(440px, 65vh);
+    overflow-y: auto;
+    background: #FFFFFF;
+    border: 1px solid #E9E6F5;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    z-index: 10000;
+    box-sizing: border-box;
+}
+
+.nexo-filtros-buscador[hidden] {
+    display: none !important;
+}
+
+/* CONTENEDOR DE OPCIONES */
+
+#nexo-filtros-opciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* BURBUJAS */
+
+.buscador .nexo-filtro-burbuja {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    min-height: 38px;
+    padding: 9px 15px;
+    border: 1px solid #E6E0FF;
+    border-radius: 25px;
+    background: #F5F2FF;
+    color: #6C4CFF;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.buscador .nexo-filtro-burbuja:hover,
+.buscador .nexo-filtro-burbuja:focus-visible {
+    background: #6C4CFF;
+    color: #FFFFFF;
+    border-color: #6C4CFF;
+    transform: none;
+}
+
+/* BOTÓN PARA REGRESAR */
+
+.buscador .nexo-filtro-volver {
+    width: 100%;
+    height: auto;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border: none;
+    background: transparent;
+    color: #6C4CFF;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* VERSIÓN MÓVIL */
+
+@media (max-width: 600px) {
+    .nexo-filtros-buscador {
+        min-width: 0;
+        width: 100%;
+        padding: 14px;
+    }
+
+    .buscador .nexo-filtro-burbuja {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+}
+</style>
 
 </head>
 
@@ -525,6 +626,11 @@
             >
 
                 <div class="campo-busqueda">
+					<div class="nexo-filtros-buscador" id="nexo-filtros-buscador" hidden>
+
+    <div id="nexo-filtros-opciones"></div>
+
+</div>
 
                     <label for="busqueda-servicio">
                         ¿Qué buscas?
@@ -1344,319 +1450,159 @@
     ========================================= -->
 
     <script src="script.js"></script>
-
-
-    <!-- =========================================
-         NEXO — BÚSQUEDA RÁPIDA
-    ========================================= -->
-
     <script>
+    /* NEXO: clasificación compartida entre búsqueda visual y autocompletado */
     (() => {
+      const talento = {
+        "Cantantes y solistas": ["Solista femenino", "Solista masculino", "Dúos vocales", "Cantantes con banda", "Cantantes de música versátil"],
+        "Bandas y grupos musicales": ["Grupos de covers", "Grupos versátiles", "Bandas de rock", "Grupos pop", "Bandas de música original", "Grupos de música regional"],
+        "Música tradicional y ensambles": ["Mariachis", "Tríos románticos", "Norteños", "Bandas sinaloenses", "Rondallas", "Orquestas", "Big Bands", "Cuartetos", "Ensambles"],
+        "Músicos e instrumental": ["Pianistas y tecladistas", "Violinistas", "Saxofonistas", "Guitarristas", "Bajistas", "Bateristas y percusionistas", "Trompetistas", "Flautistas", "Violonchelistas", "Arpistas", "Música clásica e instrumental"],
+        "DJ y experiencias musicales": ["DJ para bodas", "DJ para eventos corporativos", "DJ para fiestas privadas", "DJ con performance", "Música electrónica", "Música versátil"],
+        "Comedia y humor": ["Stand-up comedy", "Comediantes", "Improvisación", "Comedia musical", "Shows de humor"],
+        "Magia y espectáculos": ["Magos", "Ilusionistas", "Mentalistas", "Hipnotistas", "Imitadores", "Shows temáticos"],
+        "Danza y performance": ["Bailarines profesionales", "Compañías de danza", "Shows coreográficos", "Performance artístico", "Espectáculos circenses"],
+        "Conferencistas": ["Motivacionales", "Empresariales", "Liderazgo", "Desarrollo personal", "Tecnología e innovación", "Bienestar"],
+        "Conductores y presentadores": ["Maestros de ceremonias", "Conductoras", "Conductores", "Presentadores corporativos", "Animadores de eventos"],
+        "Entretenimiento infantil": ["Shows infantiles", "Payasos", "Magos infantiles", "Personajes temáticos", "Cuentacuentos", "Animadores infantiles"],
+        "Actores y talento escénico": ["Actrices", "Actores", "Talento para eventos", "Personajes caracterizados", "Teatro en vivo"]
+      };
+      const produccion = ["Audio profesional", "Iluminación profesional", "Pantallas LED", "Escenarios", "Backline", "Producción integral", "Montaje de escenarios"];
+      const generos = ["Pop", "Rock", "Salsa", "Cumbia", "Regional mexicano", "Jazz", "Balada", "Versátil", "Electrónica", "Reggaetón", "Disco", "Clásica", "Norteño", "Banda", "Bolero"];
+      const conGeneros = new Set(["Cantantes y solistas", "Bandas y grupos musicales", "Música tradicional y ensambles", "DJ y experiencias musicales"]);
+      const artistas = [
+        ["Trendline", "Bandas y grupos musicales"], ["Mr. Loxley", "DJ y experiencias musicales"],
+        ["Two Souls", "Cantantes y solistas"], ["Andreas Zanetti", "Músicos e instrumental"],
+        ["Michelle Rodríguez", "Comedia y humor"], ["Tr3mens", "Músicos e instrumental"],
+        ["Percy", "Cantantes y solistas"]
+      ];
+      const normalizar = texto => texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+      const catalogo = [...artistas, ...Object.entries(talento).flatMap(([categoria, opciones]) => [
+        [categoria, 'Categoría de talento'], ...opciones.map(nombre => [nombre, categoria])
+      ]), ...produccion.map(nombre => [nombre, 'Producción y servicios'])];
+      const inputHero = document.getElementById('busqueda-servicio');
+      const menu = document.getElementById('nexo-filtros-buscador');
+      const opciones = document.getElementById('nexo-filtros-opciones');
+      const heroForm = inputHero?.closest('form');
+      let categoriaActual = '';
+      let tipoActual = '';
 
-        const catalogo = [
-
-    // =====================================
-    // ARTISTAS DESTACADOS
-    // =====================================
-
-    ["Trendline", "Banda de covers"],
-    ["Mr. Loxley", "DJ y entretenimiento"],
-    ["Two Souls", "Dúo vocal"],
-    ["Andreas Zanetti", "Pianista y comediante"],
-    ["Michelle Rodríguez", "Stand-up y conferencias"],
-    ["Tr3mens", "Trío instrumental"],
-    ["Percy", "Cantante"],
-
-    // =====================================
-    // ARTISTAS Y MÚSICA
-    // =====================================
-
-    ["Bandas de covers", "Artistas y música"],
-    ["Bandas de rock", "Artistas y música"],
-    ["Bandas de pop", "Artistas y música"],
-    ["Cantantes", "Artistas y música"],
-    ["Cantantes solistas", "Artistas y música"],
-    ["Dúos vocales", "Artistas y música"],
-    ["DJ", "Artistas y música"],
-    ["DJ para eventos", "Artistas y música"],
-    ["DJ para bodas", "Artistas y música"],
-    ["DJ + performance", "Artistas y música"],
-    ["Mariachi", "Artistas y música"],
-    ["Tríos musicales", "Artistas y música"],
-    ["Saxofonista", "Artistas y música"],
-    ["Pianista", "Artistas y música"],
-    ["Violinista", "Artistas y música"],
-    ["Guitarrista", "Artistas y música"],
-    ["Músicos", "Artistas y música"],
-    ["Ensambles musicales", "Artistas y música"],
-    ["Orquestas", "Artistas y música"],
-
-    // =====================================
-    // ENTRETENIMIENTO
-    // =====================================
-
-    ["Stand-up", "Entretenimiento"],
-    ["Comediantes", "Entretenimiento"],
-    ["Magos", "Entretenimiento"],
-    ["Mentalistas", "Entretenimiento"],
-    ["Conferencistas", "Entretenimiento"],
-    ["Conductores", "Entretenimiento"],
-    ["Maestros de ceremonias", "Entretenimiento"],
-    ["Bailarines", "Entretenimiento"],
-    ["Shows temáticos", "Entretenimiento"],
-    ["Imitadores", "Entretenimiento"],
-
-    // =====================================
-    // PRODUCCIÓN Y SERVICIOS
-    // =====================================
-
-    ["Pantallas LED", "Producción y servicios"],
-    ["Renta de pantallas LED", "Producción y servicios"],
-    ["Audio profesional", "Producción y servicios"],
-    ["Renta de audio", "Producción y servicios"],
-    ["Iluminación profesional", "Producción y servicios"],
-    ["Renta de iluminación", "Producción y servicios"],
-    ["Backline", "Producción y servicios"],
-    ["Renta de backline", "Producción y servicios"],
-    ["Escenarios", "Producción y servicios"],
-    ["Montaje de escenarios", "Producción y servicios"],
-    ["Producción de eventos", "Producción y servicios"],
-    ["Producción integral", "Producción y servicios"],
-    ["Producción de conciertos", "Producción y servicios"],
-    ["Producción de eventos corporativos", "Producción y servicios"]
-
-];
-
-        function normalizar(valor) {
-
-            return valor
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .toLowerCase()
-                .trim();
-
+      function render(etiquetas, onSelect, anterior) {
+        if (!menu || !opciones) return;
+        opciones.replaceChildren();
+        menu.querySelectorAll('.nexo-filtro-volver').forEach(el => el.remove());
+        if (anterior) {
+          const volver = document.createElement('button');
+          volver.type = 'button';
+          volver.className = 'nexo-filtro-volver';
+          volver.textContent = '← Volver';
+          volver.addEventListener('click', anterior);
+          opciones.before(volver);
         }
-
-
-        document
-            .querySelectorAll("form[data-nexo-autocomplete]")
-            .forEach((form, index) => {
-
-                const input = form.querySelector('input[name="q"]');
-
-                if (!input) return;
-
-                const contenedor =
-                    input.closest(".campo-busqueda") || form;
-
-                contenedor.classList.add(
-                    "nexo-autocomplete-contenedor"
-                );
-
-
-                // CREAR LISTA DE SUGERENCIAS
-
-                const lista = document.createElement("div");
-
-                lista.className = "nexo-autocomplete-lista";
-
-                lista.id = `nexo-autocomplete-${index}`;
-
-                lista.setAttribute("role", "listbox");
-
-                lista.hidden = true;
-
-                input.setAttribute("aria-controls", lista.id);
-
-                input.setAttribute("aria-expanded", "false");
-
-                contenedor.appendChild(lista);
-
-
-                // CERRAR SUGERENCIAS
-
-                function cerrar() {
-
-                    lista.hidden = true;
-
-                    lista.replaceChildren();
-
-                    input.setAttribute("aria-expanded", "false");
-
-                }
-
-
-                // MOSTRAR SUGERENCIAS
-
-                function abrir() {
-
-                    const consulta = normalizar(input.value);
-
-                    lista.replaceChildren();
-
-                    if (!consulta) {
-
-                        cerrar();
-
-                        return;
-
-                    }
-
-
-                    const coincidencias = catalogo
-    .filter(([nombre, categoria]) => {
-
-        return (
-            normalizar(nombre).includes(consulta) ||
-            normalizar(categoria).includes(consulta)
-        );
-
-    })
-    .sort((a, b) => {
-
-        function prioridad(item) {
-
-            const nombre = normalizar(item[0]);
-            const categoria = normalizar(item[1]);
-
-            // 1. Coincidencia exacta
-            if (nombre === consulta) return 0;
-
-            // 2. El nombre comienza con lo escrito
-            if (nombre.startsWith(consulta)) return 1;
-
-            // 3. Alguna palabra del nombre comienza igual
-            if (
-                nombre.split(/\s+/).some(
-                    palabra => palabra.startsWith(consulta)
-                )
-            ) return 2;
-
-            // 4. El nombre contiene las letras
-            if (nombre.includes(consulta)) return 3;
-
-            // 5. Coincidencia en categoría
-            if (categoria.startsWith(consulta)) return 4;
-
-            // 6. Coincidencia parcial en categoría
-            return 5;
+        etiquetas.forEach(etiqueta => {
+          const boton = document.createElement('button');
+          boton.type = 'button';
+          boton.className = 'nexo-filtro-burbuja';
+          boton.textContent = etiqueta;
+          boton.addEventListener('click', () => onSelect(etiqueta));
+          opciones.appendChild(boton);
+        });
+        menu.hidden = false;
+        inputHero?.setAttribute('aria-expanded', 'true');
+      }
+      function categorias() {
+        render([...Object.keys(talento), 'Producción y servicios'], elegirCategoria, null);
+      }
+      function elegirCategoria(categoria) {
+        categoriaActual = categoria;
+        render(categoria === 'Producción y servicios' ? produccion : talento[categoria], elegirTipo, categorias);
+      }
+      function elegirTipo(tipo) {
+        tipoActual = tipo;
+        if (conGeneros.has(categoriaActual)) {
+          render(['Todos los géneros', ...generos], elegirGenero, () => elegirCategoria(categoriaActual));
+        } else {
+          completar(tipo);
         }
-
-        return prioridad(a) - prioridad(b);
-
-    })
-    .slice(0, 7);
-
-
-                    // CREAR CADA SUGERENCIA
-
-                    coincidencias.forEach(([nombre, categoria]) => {
-
-                        const opcion = document.createElement("button");
-
-                        opcion.type = "button";
-
-                        opcion.className = "nexo-autocomplete-opcion";
-
-                        opcion.setAttribute("role", "option");
-
-
-                        const principal = document.createElement("span");
-
-                        principal.textContent = nombre;
-
-
-                        const detalle = document.createElement("small");
-
-                        detalle.textContent = categoria;
-
-
-                        opcion.append(principal, detalle);
-
-
-                        opcion.addEventListener("click", () => {
-
-                            input.value = nombre;
-
-                            cerrar();
-
-                            form.requestSubmit();
-
-                        });
-
-
-                        lista.appendChild(opcion);
-
-                    });
-
-
-                    // VER TODOS LOS RESULTADOS
-
-                    const verTodos = document.createElement("button");
-
-                    verTodos.type = "button";
-
-                    verTodos.className = "nexo-autocomplete-todos";
-
-                    verTodos.textContent =
-                        `Ver resultados para “${input.value.trim()}” →`;
-
-
-                    verTodos.addEventListener("click", () => {
-
-                        cerrar();
-
-                        form.requestSubmit();
-
-                    });
-
-
-                    lista.appendChild(verTodos);
-
-                    lista.hidden = false;
-
-                    input.setAttribute("aria-expanded", "true");
-
-                }
-
-
-                // ESCRIBIR EN EL BUSCADOR
-
-                input.addEventListener("input", abrir);
-
-
-                // ENFOCAR EL CAMPO
-
-                input.addEventListener("focus", abrir);
-
-
-                // CERRAR CON ESCAPE
-
-                input.addEventListener("keydown", evento => {
-
-                    if (evento.key === "Escape") {
-
-                        cerrar();
-
-                    }
-
-                });
-
-
-                // CERRAR AL HACER CLIC FUERA
-
-                document.addEventListener("click", evento => {
-
-                    if (!contenedor.contains(evento.target)) {
-
-                        cerrar();
-
-                    }
-
-                });
-
-            });
-
+      }
+      function elegirGenero(genero) {
+        completar(genero === 'Todos los géneros' ? tipoActual : `${tipoActual} ${genero}`);
+      }
+      function completar(valor) {
+        if (!inputHero || !menu) return;
+        inputHero.value = valor;
+        menu.hidden = true;
+        inputHero.setAttribute('aria-expanded', 'false');
+        inputHero.dispatchEvent(new Event('nexo:seleccion', {bubbles:true}));
+      }
+      if (inputHero && menu && opciones) {
+        inputHero.setAttribute('aria-haspopup', 'dialog');
+        inputHero.setAttribute('aria-controls', 'nexo-filtros-buscador');
+        inputHero.addEventListener('focus', () => { if (!inputHero.value.trim()) categorias(); });
+        inputHero.addEventListener('click', () => { if (!inputHero.value.trim()) categorias(); });
+        inputHero.addEventListener('input', () => {
+          menu.hidden = true;
+          inputHero.setAttribute('aria-expanded', 'false');
+        });
+        inputHero.addEventListener('keydown', e => {
+          if (e.key === 'Escape') { menu.hidden = true; inputHero.setAttribute('aria-expanded','false'); }
+        });
+        document.addEventListener('click', e => {
+          if (!menu.contains(e.target) && e.target !== inputHero) {
+            menu.hidden = true;
+            inputHero.setAttribute('aria-expanded','false');
+          }
+        });
+        heroForm?.addEventListener('submit', () => { menu.hidden = true; });
+      }
+      document.querySelectorAll('form[data-nexo-autocomplete]').forEach((form, index) => {
+        const input = form.querySelector('input[name="q"]');
+        if (!input) return;
+        const contenedor = input.closest('.campo-busqueda') || form;
+        contenedor.classList.add('nexo-autocomplete-contenedor');
+        const lista = document.createElement('div');
+        lista.className = 'nexo-autocomplete-lista';
+        lista.id = `nexo-autocomplete-${index}`;
+        lista.setAttribute('role','listbox');
+        lista.hidden = true;
+        contenedor.appendChild(lista);
+        // El HEADER y el HOME comparten sugerencias, pero el HOME conserva las burbujas al estar vacío.
+        if (input !== inputHero) input.setAttribute('aria-controls',lista.id);
+        function cerrarLista() { lista.hidden = true; lista.replaceChildren(); if (input !== inputHero) input.setAttribute('aria-expanded','false'); }
+        function sugerir() {
+          const consulta = normalizar(input.value);
+          lista.replaceChildren();
+          if (!consulta) { cerrarLista(); return; }
+          if (input === inputHero) { menu.hidden = true; inputHero.setAttribute('aria-expanded','false'); }
+          const coincidencias = catalogo.filter(([nombre, categoria]) =>
+            normalizar(nombre).includes(consulta) || normalizar(categoria).includes(consulta)
+          ).sort((a,b) => {
+            const score = item => { const nombre = normalizar(item[0]); return nombre === consulta ? 0 : nombre.startsWith(consulta) ? 1 : nombre.includes(consulta) ? 2 : 3; };
+            return score(a) - score(b);
+          }).slice(0,7);
+          coincidencias.forEach(([nombre, categoria]) => {
+            const boton = document.createElement('button');
+            boton.type = 'button'; boton.className = 'nexo-autocomplete-opcion'; boton.setAttribute('role','option');
+            const principal = document.createElement('span'); principal.textContent = nombre;
+            const detalle = document.createElement('small'); detalle.textContent = categoria;
+            boton.append(principal, detalle);
+            boton.addEventListener('click', () => { input.value = nombre; cerrarLista(); form.requestSubmit(); });
+            lista.appendChild(boton);
+          });
+          const todos = document.createElement('button');
+          todos.type = 'button'; todos.className = 'nexo-autocomplete-todos';
+          todos.textContent = `Ver resultados para “${input.value.trim()}” →`;
+          todos.addEventListener('click', () => { cerrarLista(); form.requestSubmit(); });
+          lista.appendChild(todos);
+          lista.hidden = false;
+          input.setAttribute('aria-expanded','true');
+        }
+        input.addEventListener('input', sugerir);
+        input.addEventListener('focus', sugerir);
+        input.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarLista(); });
+        document.addEventListener('click', e => { if (!contenedor.contains(e.target)) cerrarLista(); });
+        if (input === inputHero) input.addEventListener('nexo:seleccion', cerrarLista);
+      });
     })();
     </script>
 
