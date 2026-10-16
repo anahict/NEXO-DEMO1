@@ -12,64 +12,118 @@
 
 <body>
 
-    <header class="header">
+    <!-- =========================================
+     HEADER PRINCIPAL NEXO
+========================================= -->
 
-        <a href="../index.html" class="logo">
-            NEXO
+<header class="header nexo-header">
+
+    <a href="../index.html" class="nexo-logo">
+        <span class="logo-ne">NE</span><span class="logo-xo">XO</span>
+    </a>
+
+    <!-- BUSCADOR DEL HEADER -->
+
+    <form
+        class="nexo-header-buscador"
+        action="explorar.html"
+        method="get"
+    >
+        <input
+            type="search"
+            id="nexo-header-search"
+            name="q"
+            autocomplete="off"
+            placeholder="Busca artistas, música o servicios..."
+            aria-label="Buscar servicios"
+            required
+        >
+
+        <button type="submit" aria-label="Buscar">
+            ⌕
+        </button>
+    </form>
+
+    <div class="nexo-header-acciones">
+
+        <a href="../index.html" class="nexo-login nexo-inicio">
+            Inicio
         </a>
 
-        <nav class="nav">
-            <a href="explorar.html">Explorar</a>
-            <a href="eventos.html">Tipos de evento</a>
-            <a href="como-funciona.html">Cómo funciona</a>
-            <a href="proveedores.html">Publica tus servicios</a>
-        </nav>
+        <a href="login.html" class="nexo-login">
+            Iniciar sesión
+        </a>
 
-        <div class="header-actions">
+        <a href="proveedores.html" class="nexo-publicar">
+            Publica tus servicios
+        </a>
 
-            <a href="login.html" class="login">
-                Iniciar sesión
-            </a>
+        <button
+            type="button"
+            class="nexo-icono"
+            aria-label="Favoritos"
+        >
+            ♡
+        </button>
 
-            <a href="cotizar.html" class="btn-cotizar">
-                Cotiza tu evento
-            </a>
+        <button
+            type="button"
+            class="nexo-menu-boton"
+            id="nexo-menu-boton"
+            aria-label="Abrir menú"
+            aria-expanded="false"
+            aria-controls="nexo-menu"
+        >
+            ☰
+        </button>
 
-        </div>
-		
-		<style>
-#sin-resultados {
-    background: #ffffff;
-    border: 1px solid #e8e8e8;
-    border-radius: 20px;
-    padding: 45px 30px;
-    text-align: center;
-    margin-bottom: 25px;
-}
+    </div>
 
-#sin-resultados[hidden] {
-    display: none !important;
-}
+</header>
 
-#sin-resultados h3 {
-    color: #171717;
-    font-size: 22px;
-    margin-bottom: 12px;
-}
+<!-- =========================================
+     MENÚ DESPLEGABLE NEXO
+========================================= -->
 
-#sin-resultados p {
-    color: #777777;
-    font-size: 15px;
-    line-height: 1.6;
-}
+<nav
+    class="nexo-menu-panel"
+    id="nexo-menu"
+    aria-label="Menú principal"
+    hidden
+>
+    <div class="nexo-menu-contenido">
 
-/* Fotografías provisionales de comedia; sustituir con imágenes autorizadas */
-.nexo-comedia-placeholder { background:var(--color-artista,#7048c6); display:flex; align-items:center; justify-content:center; min-height:220px; }
-.nexo-comedia-inicial { color:white; font-size:clamp(42px,5vw,76px); font-weight:800; letter-spacing:.04em; }
-.nexo-perfil-pendiente { display:inline-block; margin-top:12px; font-size:13px; color:#777; font-weight:600; }
-</style>
+        <h2>Explora NEXO</h2>
 
-    </header>
+        <a href="artistas.html">Artistas y música</a>
+
+        <a href="explorar.html?categoria=entretenimiento">
+            Entretenimiento
+        </a>
+
+        <a href="explorar.html?q=conferencistas">
+            Conferencistas y conductores
+        </a>
+
+        <a href="produccion.html">
+            Producción y servicios para eventos
+        </a>
+
+        <hr>
+
+        <a href="../index.html">Inicio</a>
+        <a href="explorar.html">Explorar</a>
+        <a href="eventos.html">Tipos de evento</a>
+        <a href="como-funciona.html">Cómo funciona</a>
+        <a href="proveedores.html">Publica tus servicios</a>
+        <a href="login.html">Iniciar sesión</a>
+
+        <a href="cotizar.html" class="nexo-menu-cotizar">
+            Cotiza tu evento
+        </a>
+
+    </div>
+</nav>
 
     <main>
 
@@ -873,7 +927,38 @@ actualizarEspecialidades();
 filtrarArtistas();
 
 });
+		</script>
+	
+		<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const boton = document.getElementById("nexo-menu-boton");
+    const menu = document.getElementById("nexo-menu");
+
+    if (!boton || !menu) return;
+
+    boton.addEventListener("click", function () {
+        const abrir = menu.hidden;
+
+        menu.hidden = !abrir;
+        boton.setAttribute("aria-expanded", String(abrir));
+        boton.setAttribute(
+            "aria-label",
+            abrir ? "Cerrar menú" : "Abrir menú"
+        );
+    });
+
+    document.addEventListener("keydown", function (evento) {
+        if (evento.key === "Escape") {
+            menu.hidden = true;
+            boton.setAttribute("aria-expanded", "false");
+            boton.setAttribute("aria-label", "Abrir menú");
+        }
+    });
+
+});
 </script>
+	
 </body>
 
 </html>
